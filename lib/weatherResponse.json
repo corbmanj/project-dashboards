@@ -1,0 +1,15 @@
+{
+  "daily": {
+    "data": [
+      {
+        "temperatureMin": "42",
+        "temperatureMax": "54",
+        "precipProbability": "0.2",
+        "summary": "this is a test",
+        "icon": "rain",
+        "sunriseTime": "14041612",
+        "sunsetTime": "14041912"
+      }
+    ]
+  }
+}
