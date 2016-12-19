@@ -85,11 +85,11 @@ export default React.createClass({
               projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].count++;
               projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].reqNums.push(thisReq.number)
             }
-            if (thisReq.completionDate === 'future' || thisReq.compcompletionDate > thisReq.date) {
+            if (thisReq.completionDate === 'future' || thisReq.completionDate > thisReq.date) {
               projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].isNotMet = true;
-              if (projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].severity !== 'Need') {
-                projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].severity = thisReq.priority
-              }
+            }
+            if (projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].severity !== 'Need') {
+              projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].severity = thisReq.priority
             }
           }
         }

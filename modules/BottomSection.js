@@ -35,9 +35,9 @@ export default React.createClass({
           <tbody>
           <tr>
             <th></th>
-            <th width="50%">Description</th>
+            <th width="40%">Description</th>
             <th>Domain</th>
-            <th width="10%">Gap</th>
+            <th width="12%">Gap</th>
             <th>Impact</th>
             <th>Recommended Mitigation</th>
             <th>Owner</th>

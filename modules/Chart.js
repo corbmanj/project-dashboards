@@ -10,7 +10,7 @@ export default React.createClass({
   drawChart: function (chart, props) {
     // draw each row
     let domainy = 70;
-    let colors = ["#5e412f", "#44A3D7", "78c0a8", "#F07818", "#f0a830", "#8141b2"]
+    let colors = ["#145190", "#93B3D2", "#BBCDC3", "#7472A2", "#8B9B5F", "#C7DBA9"]
     let i = 0;
     chart.append("text")
       .attr("x", 500)
@@ -21,21 +21,22 @@ export default React.createClass({
       .attr("font-weight", "bold")
       .attr("fill", "grey");
     for (let domain in props.currentProject) {
-      if (domain==="Personalized Learning") {domain = "PL";}
+      let domainText = domain === "Personalized Learning" ? "PL" : domain
+      // if (domain==="Personalized Learning") {domain = "PL";}
       let newRow = chart.append("g")
         .attr("class", "row")
         .attr("transform", "translate(100,"+domainy+")");
       newRow.append("text")
         .attr("x", -100)
         .attr("y", 10)
-        .text(domain)
+        .text(domainText)
         .attr("font-family", "sans-serif")
         .attr("font-weight", "bold")
         .attr("font-size", "18px")
         .attr("fill", colors[i]);
       for (let date in props.currentProject[domain]) {
-        var strokeColor = props.currentProject[domain][date].isNotMet ? "red" : colors[i];
-        var fillColor = props.currentProject[domain][date].severity === "Need" ? "red" : "white";
+        var color = props.currentProject[domain][date].isNotMet ? "red" : colors[i];
+        var fillColor = props.currentProject[domain][date].severity === "Need" ? color : "white";
         var x = date === "future" ? 950 : (props.currentProject[domain][date].date - props.minDate)/(props.maxDate-props.minDate)*1000;
         var text = props.currentProject[domain][date].count == 1 ? props.currentProject[domain][date].reqNums[0] : props.currentProject[domain][date].count + " req";
         var rqList = props.currentProject[domain][date].reqNums.join(', ');
@@ -44,7 +45,7 @@ export default React.createClass({
           .attr("cy", 5)
           .attr("r", 10)
           .style("fill", fillColor)
-          .style("stroke", strokeColor)
+          .style("stroke", color)
           .style("stroke-width", 7)
           .append("svg:title")
           .text(rqList);
@@ -55,7 +56,7 @@ export default React.createClass({
           .attr("font-family", "sans-serif")
           .attr("font-size", "10px")
           .attr("font-weight", "bold")
-          .attr("fill", strokeColor);
+          .attr("fill", color);
       }
       i++;
       domainy = domainy + 50;
