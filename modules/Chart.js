@@ -112,7 +112,7 @@ export default React.createClass({
   render () {
     return (
       <div id="content" className="content">
-        <h3>Project Timeline</h3>
+        <h3 className="header">Project Timeline</h3>
           <svg className="chart"></svg>
       </div>
     )

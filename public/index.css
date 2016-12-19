@@ -12,8 +12,8 @@ h1 {
   line-height: 1.5em;
 }
 
-h2.header{
-  padding: 5px 0 0 5px;
+h3.header {
+  margin-top: 35px;
 }
 
 ul.sectionList {
