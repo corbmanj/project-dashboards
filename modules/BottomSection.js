@@ -20,7 +20,10 @@ export default React.createClass({
           <td>{req.domainName}</td>
           <td className={className}>
             <p><b>Requested:</b> {this.dateToString(req.date)}</p>
-            <p><b>Gap:</b> {typeof req.gap === "number" ? `${Math.round(req.gap)} months` : req.gap}</p>
+            <p>
+              <b>Gap:</b> {typeof req.gap === "number" ? `${Math.round(req.gap)} months` : req.gap}
+              {className !== "green" && req.priority === "Need" ? <span className="pit-icon-standard pt-icon-error" /> : null}
+            </p>
             </td>
           <td>{req.impact}</td>
           <td>{req.mitigation}</td>
