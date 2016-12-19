@@ -1,10 +1,15 @@
 /* GENERAL */
 * {
-  margin: 5px;
+  margin: 8px 5px;
 }
 
 body {
   margin-bottom: 30px;
+}
+
+h1 {
+  margin-bottom: 15px;
+  line-height: 1.5em;
 }
 
 h2.header{
@@ -16,6 +21,44 @@ ul.sectionList {
   padding-left: 30px;
 }
 
+td {
+  border: 0px solid white;
+  padding: 3px;
+  font-size: 0.6em;
+}
+
+td.rnum {
+  text-align: center;
+  font-weight: 600;
+}
+
+td.red {
+  color: red;
+}
+
+td.maroon {
+  color: maroon;
+}
+
+td.green {
+  color: #0a0;
+}
+
+tr:nth-child(even) {
+  background: rgba(247, 250, 224, 1.0);
+}
+
+tr:nth-child(odd) {
+  background: #f1f6c7;
+}
+
+tr:first-child {
+  background: none;
+}
+
+ul.noBullet {
+  list-style-type: none;
+}
 
 /* NAVBAR */
 .active {
