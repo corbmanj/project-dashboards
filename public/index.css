@@ -60,6 +60,10 @@ ul.noBullet {
   list-style-type: none;
 }
 
+span.pt-icon {
+  color: inherit;
+}
+
 /* NAVBAR */
 .active {
   color: lightgreen;
