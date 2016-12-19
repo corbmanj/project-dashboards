@@ -22,7 +22,7 @@ export default React.createClass({
             <p><b>Requested:</b> {this.dateToString(req.date)}</p>
             <p>
               <b>Gap:</b> {typeof req.gap === "number" ? `${Math.round(req.gap)} months` : req.gap}
-              {className !== "green" && req.priority === "Need" ? <span className="pt-icon pt-icon-error" /> : null}
+              {req.priority === "Need" ? <span className="pt-icon pt-icon-error" /> : null}
             </p>
             </td>
           <td>{req.impact}</td>
