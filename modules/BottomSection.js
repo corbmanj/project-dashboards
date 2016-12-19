@@ -5,7 +5,7 @@ import moment from 'moment'
 export default React.createClass({
   dateToString: function (date) {
     let dateObj = moment(date)
-    return dateObj.format("MMMM, YYYY");
+    return dateObj.format("MMM, YYYY");
   },
 
   render () {
