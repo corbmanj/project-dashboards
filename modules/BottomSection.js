@@ -19,7 +19,7 @@ export default React.createClass({
           <td>{req.description}</td>
           <td>{req.domainName}</td>
           <td className={className}>
-            <p><b>Date:</b> {this.dateToString(req.date)}</p>
+            <p><b>Requested:</b> {this.dateToString(req.date)}</p>
             <p><b>Gap:</b> {typeof req.gap === "number" ? `${Math.round(req.gap)} months` : req.gap}</p>
             </td>
           <td>{req.impact}</td>
