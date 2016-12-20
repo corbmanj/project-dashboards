@@ -20,9 +20,43 @@ export default React.createClass({
       .attr("font-size", "18px")
       .attr("font-weight", "bold")
       .attr("fill", "grey");
+    let newRow = chart.append("g")
+      .attr("class", "row")
+      .attr("transform", "translate(100,"+domainy+")");
+    newRow.append("text")
+      .attr("x", -100)
+      .attr("y", 10)
+      .text('Product Timeline')
+      .attr("font-family", "sans-serif")
+      .attr("font-weight", "bold")
+      .attr("font-size", "18px")
+      .attr("fill", colors[i]);
+    for (let date in props.productTimelines) {
+      if (props.productTimelines[date].title === props.projectName) {
+        var x = (props.productTimelines[date].milestoneDate - props.minDate)/(props.maxDate-props.minDate)*900;
+        var text = props.productTimelines[date].milestoneName;
+        newRow.append("circle")
+          .attr("cx", x)
+          .attr("cy", 5)
+          .attr("r", 10)
+          .style("fill", "white")
+          .style("stroke", colors[i])
+          .style("stroke-width", 7);
+        newRow.append("text")
+          .attr("x", x)
+          .attr("y", -10)
+          .text(text)
+          .attr("font-family", "sans-serif")
+          .attr("font-size", "10px")
+          .attr("font-weight", "bold")
+          .attr("text-anchor", "middle")
+          .attr("fill", colors[i]);
+        console.log(props.productTimelines[date].milestoneName,props.productTimelines[date].milestoneDate)
+      }
+    }
+    domainy = domainy + 50;
     for (let domain in props.currentProject) {
       let domainText = domain === "Personalized Learning" ? "PL" : domain
-      // if (domain==="Personalized Learning") {domain = "PL";}
       let newRow = chart.append("g")
         .attr("class", "row")
         .attr("transform", "translate(100,"+domainy+")");
@@ -37,7 +71,7 @@ export default React.createClass({
       for (let date in props.currentProject[domain]) {
         var color = props.currentProject[domain][date].isNotMet ? "red" : colors[i];
         var fillColor = props.currentProject[domain][date].severity === "Need" ? color : "white";
-        var x = date === "future" ? 950 : (props.currentProject[domain][date].date - props.minDate)/(props.maxDate-props.minDate)*1000;
+        var x = date === "future" ? 950 : (props.currentProject[domain][date].date - props.minDate)/(props.maxDate-props.minDate)*900;
         var text = props.currentProject[domain][date].count == 1 ? props.currentProject[domain][date].reqNums[0] : props.currentProject[domain][date].count + " req";
         var rqList = props.currentProject[domain][date].reqNums.join(', ');
         newRow.append("circle")
@@ -50,12 +84,13 @@ export default React.createClass({
           .append("svg:title")
           .text(rqList);
         newRow.append("text")
-          .attr("x", x-13)
+          .attr("x", x)
           .attr("y", -10)
           .text(text)
           .attr("font-family", "sans-serif")
           .attr("font-size", "10px")
           .attr("font-weight", "bold")
+          .attr("text-anchor", "middle")
           .attr("fill", color);
       }
       i++;

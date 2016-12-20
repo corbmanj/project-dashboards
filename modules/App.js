@@ -12,7 +12,7 @@ export default React.createClass({
   },
 
   componentWillMount: function () {
-    fetch('https://script.google.com/macros/s/AKfycbwhD2PCeG_rYpsXFW9VmPYmfAErjW4ClrV3DcXEgz7VWrL3pWg/exec')
+    fetch('//script.google.com/macros/s/AKfycbwhD2PCeG_rYpsXFW9VmPYmfAErjW4ClrV3DcXEgz7VWrL3pWg/exec')
       .then((response) => {
         if (response.status >= 400) {
           throw new Error("Bad response from server")
@@ -55,7 +55,7 @@ export default React.createClass({
           response.projects[project].sgName = response.subjectGroups.find(g => {return g.id === response.projects[project].subjectGroup}).name
           response.projects[project].sgPlan = response.subjectGroups.find(g => {return g.id === response.projects[project].subjectGroup}).plan
         }
-        this.setState({requests: response.requestedDates, projects: response.projects})
+        this.setState({requests: response.requestedDates, projects: response.projects, productTimelines: response.productTimelines})
 
         // get min and max dates
         let minDate, maxDate
@@ -63,8 +63,14 @@ export default React.createClass({
         minDate = Math.min(...dates)
         maxDate = Math.max(...dates)
         dates = response.completionDates.map(function(item) { if (item.date){return new Date(item.date)}}).filter(function(date){return date!==undefined})
+        console.log(dates)
         minDate = Math.min(minDate, Math.min(...dates))
         maxDate = Math.max(maxDate, Math.max(...dates))
+        dates = response.productTimelines.map(function(item) { if (item.milestoneDate){return new Date(item.milestoneDate)}}).filter(function(date){return date!==undefined && date<1577836800000})
+        console.log(dates)
+        minDate = Math.min(minDate, Math.min(...dates))
+        maxDate = Math.max(maxDate, Math.max(...dates))
+        console.log(minDate, maxDate)
         // var dateRange = maxDate - minDate
         this.setState({maxDate: maxDate, minDate: minDate})
 
@@ -121,6 +127,7 @@ export default React.createClass({
         <Chart /*projects={this.state.projectRequests}*/
           projectName={this.state.currentProject.name}
           currentProject={this.state.projectRequests[this.state.currentProject.name]}
+          productTimelines={this.state.productTimelines}
           minDate={this.state.minDate}
           maxDate={this.state.maxDate}
         />
