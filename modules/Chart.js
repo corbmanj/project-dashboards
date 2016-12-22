@@ -30,7 +30,7 @@ export default React.createClass({
       .attr("font-family", "sans-serif")
       .attr("font-weight", "bold")
       .attr("font-size", "18px")
-      .attr("fill", colors[i]);
+      .attr("fill", "#7C0A23");
     for (let date in props.productTimelines) {
       if (props.productTimelines[date].title === props.projectName) {
         var x = (props.productTimelines[date].milestoneDate - props.minDate)/(props.maxDate-props.minDate)*900;
@@ -40,7 +40,7 @@ export default React.createClass({
           .attr("cy", 5)
           .attr("r", 10)
           .style("fill", "white")
-          .style("stroke", colors[i])
+          .style("stroke", "#7C0A23")
           .style("stroke-width", 7);
         newRow.append("text")
           .attr("x", x)
@@ -50,8 +50,7 @@ export default React.createClass({
           .attr("font-size", "10px")
           .attr("font-weight", "bold")
           .attr("text-anchor", "middle")
-          .attr("fill", colors[i]);
-        console.log(props.productTimelines[date].milestoneName,props.productTimelines[date].milestoneDate)
+          .attr("fill", "#7C0A23");
       }
     }
     domainy = domainy + 50;

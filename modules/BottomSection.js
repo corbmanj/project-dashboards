@@ -9,9 +9,16 @@ export default React.createClass({
   },
 
   render () {
-    const cells = this.props.requests.filter(r => {
+    const rows = this.props.requests
+      .filter(r => {
       return r.projectName === this.props.currentProject.name
-    }).map((req, i) => {
+    })
+      .sort((a,b) => {
+        if (a.date < b.date) {return -1}
+        else if (a.date  > b.date) {return 1}
+        else if (a.date === b.date) {return 0}
+      })
+      .map((req, i) => {
       const className = typeof req.gap === "number" ? req.gap < 0 ? 'red' : 'green' : 'maroon'
       return (
         <tr key={i}>
@@ -21,7 +28,7 @@ export default React.createClass({
           <td className={className}>
             <p><b>Requested:</b> {this.dateToString(req.date)}</p>
             <p>
-              <b>Gap:</b> {typeof req.gap === "number" ? `${Math.round(req.gap)} months` : req.gap}
+              <b>Gap:</b> {typeof req.gap === "number" ? `${Math.round(req.gap)} months ` : `${req.gap} `}
               {req.priority === "Need" ? <span className="pt-icon pt-icon-error" /> : null}
             </p>
             </td>
@@ -45,7 +52,7 @@ export default React.createClass({
             <th>Recommended Mitigation</th>
             <th>Owner</th>
           </tr>
-          {cells}
+          {rows}
           </tbody>
         </table>
       </div>
