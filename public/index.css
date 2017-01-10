@@ -44,6 +44,10 @@ td.green {
   color: #0a0;
 }
 
+td.grey {
+  color: #888;
+}
+
 tr:nth-child(even) {
   background: rgba(247, 250, 224, 1.0);
 }

@@ -39,6 +39,7 @@ export default React.createClass({
               response.requestedDates[req].name = request.name
               response.requestedDates[req].number = request.number
               response.requestedDates[req].description = request.description
+              response.requestedDates[req].currentStatus = request.currentStatus
             }
             let project = response.projects.find(p => {return p.id === response.requestedDates[req].projectId})
             if (project) {
