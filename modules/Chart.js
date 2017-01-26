@@ -20,6 +20,22 @@ export default React.createClass({
       .attr("font-size", "18px")
       .attr("font-weight", "bold")
       .attr("fill", "grey");
+    chart.append("text")
+      .attr("x", 1021)
+      .attr("y", 90)
+      .text("Unplanned")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "10px")
+      .attr("font-weight", "bold")
+      .attr("fill", "grey");
+    chart.append("text")
+      .attr("x", 1077)
+      .attr("y", 90)
+      .text("Complete")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", "10px")
+      .attr("font-weight", "bold")
+      .attr("fill", "grey");
     let newRow = chart.append("g")
       .attr("class", "row")
       .attr("transform", "translate(100,"+domainy+")");
@@ -70,7 +86,14 @@ export default React.createClass({
       for (let date in props.currentProject[domain]) {
         var color = props.currentProject[domain][date].isNotMet ? "red" : colors[i];
         var fillColor = props.currentProject[domain][date].severity === "Need" ? color : "white";
-        var x = date === "future" ? 950 : (props.currentProject[domain][date].date - props.minDate)/(props.maxDate-props.minDate)*900;
+        var x
+        if (date === "future") {
+          x = 950
+        } else if (date === 'delivered') {
+          x = 1000
+        } else {
+          x = (props.currentProject[domain][date].date - props.minDate)/(props.maxDate-props.minDate)*900
+        }
         var text = props.currentProject[domain][date].count == 1 ? props.currentProject[domain][date].reqNums[0] : props.currentProject[domain][date].count + " req";
         var rqList = props.currentProject[domain][date].reqNums.join(', ');
         newRow.append("circle")

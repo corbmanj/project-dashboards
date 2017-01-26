@@ -64,14 +64,11 @@ export default React.createClass({
         minDate = Math.min(...dates)
         maxDate = Math.max(...dates)
         dates = response.completionDates.map(function(item) { if (item.date){return new Date(item.date)}}).filter(function(date){return date!==undefined})
-        console.log(dates)
         minDate = Math.min(minDate, Math.min(...dates))
         maxDate = Math.max(maxDate, Math.max(...dates))
         dates = response.productTimelines.map(function(item) { if (item.milestoneDate){return new Date(item.milestoneDate)}}).filter(function(date){return date!==undefined && date<1577836800000})
-        console.log(dates)
         minDate = Math.min(minDate, Math.min(...dates))
         maxDate = Math.max(maxDate, Math.max(...dates))
-        console.log(minDate, maxDate)
         // var dateRange = maxDate - minDate
         this.setState({maxDate: maxDate, minDate: minDate})
 
@@ -82,20 +79,31 @@ export default React.createClass({
           if (thisReq.completionDate && thisReq.domainName && thisReq.name && thisReq.projectName) {
             if (!projectRequests[thisReq.projectName]) {projectRequests[thisReq.projectName] = {}}
             if (!projectRequests[thisReq.projectName][thisReq.domainGroup]) { projectRequests[thisReq.projectName][thisReq.domainGroup] = {} }
-            if (!projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate]) {
+            if (thisReq.currentStatus === 'Delivered' && !projectRequests[thisReq.projectName][thisReq.domainGroup]['delivered']) {
+              projectRequests[thisReq.projectName][thisReq.domainGroup]['delivered'] = {
+                count: 1,
+                reqNums: [thisReq.number]
+              }
+            } else if (!projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate]) {
               projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate] = {
                 count: 1,
                 date: thisReq.completionDate,
                 reqNums: [thisReq.number]
               }
             } else {
-              projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].count++;
-              projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].reqNums.push(thisReq.number)
+              if (thisReq.currentStatus === 'Delivered') {
+                projectRequests[thisReq.projectName][thisReq.domainGroup]['delivered'].count++;
+                projectRequests[thisReq.projectName][thisReq.domainGroup]['delivered'].reqNums.push(thisReq.number)
+              }
+              else {
+                projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].count++;
+                projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].reqNums.push(thisReq.number)
+              }
             }
             if (thisReq.completionDate === 'future' || thisReq.completionDate > thisReq.date) {
               projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].isNotMet = true;
             }
-            if (projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].severity !== 'Need') {
+            if (thisReq.currentStatus !== 'Delivered' && projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].severity !== 'Need') {
               projectRequests[thisReq.projectName][thisReq.domainGroup][thisReq.completionDate].severity = thisReq.priority
             }
           }
